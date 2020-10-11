@@ -10,15 +10,18 @@
         <ol>
             <h1>{{title}}</h1>
             <h3>A Place to store your todos</h3>
+            <input type="text" placeholder="Filter your to-dos" class="filtertodo"><br />
+            
 
             <div *ngFor="let chore of todoObjects; index as i">
   
             
                 <li>
                     <button class="removebutton" (click)="remove(i)">X</button>
-                    <button class="buttonstyle" *ngIf="!chore.completed" (click)="completeTask(i)">Complete</button>
+                    <button class="buttonstyle" *ngIf="!chore.completed" (click)="completeTask(i)">Complete</button> 
+                    <button class="removebutton" *ngIf="!chore.completed" (click)="updateTheTask(i)">Update</button>
                     <div *ngIf="chore.completed;else notComplete"><s>{{chore.task}}</s></div>
-                    <ng-template #notComplete>{{chore.task}}</ng-template>
+                    <ng-template #notComplete> <input [(ngModel)]="updateEntry" value ="{{chore.task}}" placeholder="{{chore.task}}" class="textinput" id="theTask"></ng-template>
                     
                 </li>
         </div>
@@ -26,7 +29,7 @@
         <button class="addButton" onclick="document.getElementById('addTask').value=''"(click)="addTheTask()">Add</button> <br />
         </ol>
         </div>
-        <!--<div class="todoStyle" *ngIf="congrats()" ><p>You did it! Have a Cookie.</p></div>-->
+        <div class="todoStyle" *ngIf="!Congrats()" ><p>You did it! Have a Cookie.</p></div>
         
 
     </body>

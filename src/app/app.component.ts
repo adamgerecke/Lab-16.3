@@ -1,5 +1,6 @@
 import { style } from '@angular/animations';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { THIS_EXPR, ThrowStmt } from '@angular/compiler/src/output/output_ast';
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { Component } from '@angular/core';
 
 @Component({
@@ -10,8 +11,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'TODO List';
   userEntry="";
+  updateEntry="";
   allCompleted: boolean;
-  verifyArray: boolean[];
   
 
   todoObjects:ToDo[] = [
@@ -43,37 +44,19 @@ export class AppComponent {
     this.todoObjects.splice(i,1);
   }
 
-  congrats = function() {
-    for(let item of this.todoObjects) {
-      if (item.completed == true) {
-        this.verifyArray.push(true)
+  Congrats = function(){
+
+      if(this.todoObjects.some(task => task.completed === false)){
+        return true;
       }
-      else{
-        this.verifyArray.push(false)
-      } 
-    }
-    for(let verify of this.verify) {
-      if(verify = true) {
-        this.allCompleted = true;
-      }
-      else {
-        this.allCompleted = false;
-      }
-    }
-    return this.allCompleted;
+      return false;
+
   }
   
-  /*congrats = function(){
-    for (let item of this.todoObjects){
-      if(item.completed == false){
-        this.allCompleted = false;
-      }
-      else{
-        this.allCompleted = true; 
-      }
-    }
-    return this.allCompleted;
-  }*/
+  updateTheTask = function(i){
+    this.todoObjects[i].task = this.updateEntry;
+  }
+
 
 }
 
