@@ -2,6 +2,7 @@ import { style } from '@angular/animations';
 import { THIS_EXPR, ThrowStmt } from '@angular/compiler/src/output/output_ast';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { Component } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'TODO List';
-  userEntry="";
-  updateEntry="";
-  allCompleted: boolean;
+  
+  title : string = 'TODO List';
+  userEntry : string ="";
+  updateEntry : string ="";
+  searchEntry : string ="";
+  
+  index : number;
+
+  updateEnable : boolean = false;
+  
   
 
   todoObjects:ToDo[] = [
@@ -52,9 +59,33 @@ export class AppComponent {
       return false;
 
   }
+
+  toggleUpdate = function(i){
+    this.updateEnable = true;
+    this.index = i;
+  }
   
   updateTheTask = function(i){
-    this.todoObjects[i].task = this.updateEntry;
+    if (!!this.updateEntry){
+      this.todoObjects[i].task = this.updateEntry;
+      this.updateEnable = false;
+      this.updateEntry = '';
+    }
+
+  }
+
+  updateOff = function(){
+    this.updateEnable = false;
+  }
+
+  searchTask = function(i){
+    let searchIndex : number = 0
+    for (let query of this.todoObjects){
+      if(query.task == this.searchEntry[i].task){
+        this.todoObjects.splice(searchIndex,1)
+      }
+    }
+
   }
 
 

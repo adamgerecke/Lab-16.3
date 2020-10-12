@@ -1,39 +1,40 @@
 
 <div class="pagestyle">
 
-
-<html>
-    <body>
     
-        <div class="todoStyle">
-
-        <ol>
+    <div *ngIf="!updateEnable">
+        <ol class="todoStyle">
             <h1>{{title}}</h1>
             <h3>A Place to store your todos</h3>
-            <input type="text" placeholder="Filter your to-dos" class="filtertodo"><br />
-            
-
-            <div *ngFor="let chore of todoObjects; index as i">
-  
-            
-                <li>
-                    <button class="removebutton" (click)="remove(i)">X</button>
-                    <button class="buttonstyle" *ngIf="!chore.completed" (click)="completeTask(i)">Complete</button> 
-                    <button class="removebutton" *ngIf="!chore.completed" (click)="updateTheTask(i)">Update</button>
-                    <div *ngIf="chore.completed;else notComplete"><s>{{chore.task}}</s></div>
-                    <ng-template #notComplete> <input [(ngModel)]="updateEntry" value ="{{chore.task}}" placeholder="{{chore.task}}" class="textinput" id="theTask"></ng-template>
-                    
-                </li>
-        </div>
-        <input [(ngModel)]="userEntry" type class="addtodo" placeholder="Add your to-do" name="addTask" id=addTask>
-        <button class="addButton" onclick="document.getElementById('addTask').value=''"(click)="addTheTask()">Add</button> <br />
-        </ol>
-        </div>
-        <div class="todoStyle" *ngIf="!Congrats()" ><p>You did it! Have a Cookie.</p></div>
+            <input [(ngModel)]="searchEntry" type placeholder="Filter your to-dos" class="filtertodo"><br />
         
+            <div *ngFor="let chore of todoObjects; index as i">
+                    <li>
+                        <button class="removebutton" (click)="remove(i)">X</button> <!--Remove Button *WORKING*-->
+                        <button class="buttonstyle" *ngIf="!chore.completed" (click)="completeTask(i)">Complete</button> <!--Complete Button *WORKING*-->
+                        <button class="removebutton" *ngIf="!chore.completed" (click)="toggleUpdate(i)">Update</button> <!--Update Button ****NOT WORKING NEED TO REFACTOR WITH DISPLAY-->
+                     <div *ngIf="chore.completed;else notComplete"><s>{{chore.task}}</s></div> <!--Strike Through Text*WORKING*-->
+                        <ng-template #notComplete>{{chore.task}}</ng-template> <!--Display Text as a Text Box Which needs to change to display correctly-->
+                    </li>
+            </div>
+                <input [(ngModel)]="userEntry" type class="addtodo" placeholder="Add your to-do" name="addTask" id=addTask> <!--Text Box input for Adding a Task to the ToDo List*WORKING*-->
+                <button class="addButton" onclick="document.getElementById('addTask').value=''"(click)="addTheTask()">Add</button> <br /> <!--Clear the Add ToDo Field ready to Take a new Value*WORKING*-->
+            </ol>
+    </div>
 
-    </body>
-</html>
+    <div class="todoStyle" *ngIf="updateEnable" >
+                <h1>{{title}}</h1>
+                <h3>A Place to store your todos</h3>
+
+                <span><b>Update Task:</b> {{todoObjects[index].task}} </span><button class="removebutton" (click)="updateOff()">TODO List</button>
+                <input [(ngModel)]="updateEntry" id="input"/>
+                <button class="removebutton" onclick="document.getElementById('input').value=''" (click)="updateTheTask(index)">Update</button> 
+        
+    </div>
+
+    <div class="todoStyle" *ngIf="!Congrats()" ><p>You did it! Have a Cookie.</p></div>
+            
+        
 </div>
 
 
