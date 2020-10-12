@@ -6,7 +6,8 @@
         <ol class="todoStyle">
             <h1>{{title}}</h1>
             <h3>A Place to store your todos</h3>
-            <input [(ngModel)]="searchEntry" type placeholder="Filter your to-dos" class="filtertodo"><br />
+            <input [(ngModel)]="searchEntry" type placeholder="As of right now, press ctrl+f to bring up the find function on the browner to 'filter' and highlight tasks.." class="filtertodo"><button class="removebutton" (click)="(searchTask)">Search</button><br />
+            <p [innerHTML]="highlight()"></p>
         
             <div *ngFor="let chore of todoObjects; index as i">
                     <li>

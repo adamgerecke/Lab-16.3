@@ -9,11 +9,14 @@ import { Pipe, PipeTransform } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   
   title : string = 'TODO List';
   userEntry : string ="";
   updateEntry : string ="";
+  
+  content : string = "";
   searchEntry : string ="";
   
   index : number;
@@ -33,6 +36,8 @@ export class AppComponent {
     {task: 'Finish Rabies 5k', completed:false},
     {task: 'Remove stapler from Jello', completed:false},
   ];
+
+  
 
   completeTask = function(i){
     this.todoObjects[i].completed = true;
@@ -78,14 +83,19 @@ export class AppComponent {
     this.updateEnable = false;
   }
 
-  searchTask = function(i){
-    let searchIndex : number = 0
-    for (let query of this.todoObjects){
-      if(query.task == this.searchEntry[i].task){
-        this.todoObjects.splice(searchIndex,1)
-      }
-    }
+  public highlight(){
+      //Reading ALOT about PIPE and FILTER for this, not 100% which to use, or how to implement them, everything I have attempted thus far has failed.
+      //
+      //After spending another hour or so reasearching Pipe, and Filter, I wanted to go a different route, and just highlight the searched for text instead.
+      //After several different attempts I was unable to come up with a working solution. Hopfully this will be something we cover in class this week, so I can ask questions
+      //and understand better.
 
+      if (!this.searchEntry){
+        return this.content;
+      }
+      return this.content.replace(new RegExp(this.searchEntry, "gi"), match => {
+        return '<span class="highlightText">' + match + '</span>';
+    });
   }
 
 

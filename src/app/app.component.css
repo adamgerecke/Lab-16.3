@@ -40,7 +40,7 @@
 }
 
 .filtertodo{
-    width: 99%;
+    width: 70%;
     font-family: Arial, Helvetica, sans-serif;
     border-radius: 5px;
     border-color: lightgray;
@@ -71,4 +71,8 @@
     background-color: gainsboro;
     border: hidden;
     width: 75%;
+}
+
+.highlightText {
+    background: yellow;
 }
